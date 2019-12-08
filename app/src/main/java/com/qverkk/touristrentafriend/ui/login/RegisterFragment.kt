@@ -12,19 +12,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.qverkk.touristrentafriend.R
-import com.qverkk.touristrentafriend.data.User
-import com.qverkk.touristrentafriend.data.UserDetails
-import com.qverkk.touristrentafriend.data.UserInformation
-import com.qverkk.touristrentafriend.database.AppDatabase
-import com.qverkk.touristrentafriend.services.UserService
+import com.qverkk.touristrentafriend.helpers.RegistrationHelper
 import kotlinx.android.synthetic.main.fragment_register.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.text.SimpleDateFormat
@@ -258,77 +248,20 @@ class RegisterFragment : Fragment() {
     }
 
     private fun proceedRegistration() {
-        val client = Retrofit.Builder()
-            .baseUrl("http://192.168.1.64:8080")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        val service = client.create(UserService::class.java)
-        val user = User(
-            0,
-            editText_register_username.text.toString(),
+        RegistrationHelper(
+            context!!,
+            navController,
+            activity,
+            editText_register_firstName.text.toString(),
             editText_register_lastName.text.toString(),
             editText_register_birthdate.text.toString(),
             editText_register_username.text.toString(),
-            editText_register_password.text.toString()
-        )
-
-        val information = UserInformation(
-            0,
-            0,
+            editText_register_password.text.toString(),
             editText_register_description.text.toString(),
             editText_register_price.text.toString().toBigDecimal(),
             spinner_register_country.text.toString(),
             editText_register_cityName.text.toString()
-        )
-
-        val details = UserDetails(
-            user,
-            information
-        )
-        val call = service.register(
-            details
-        )
-
-        call.enqueue(object : Callback<UserDetails> {
-            override fun onFailure(call: Call<UserDetails>, t: Throwable) {
-                Toast.makeText(context, "Failed to communicate with server", Toast.LENGTH_LONG)
-                    .show()
-            }
-
-            override fun onResponse(call: Call<UserDetails>, response: Response<UserDetails>) {
-                val userResponse = response.body()
-                if (userResponse == null) {
-                    Toast.makeText(
-                        context,
-                        getInformationFromErrorResponse(response),
-                        Toast.LENGTH_LONG
-                    ).show()
-                    return
-                }
-
-                val database = AppDatabase.getDatabase(context!!.applicationContext)
-                Toast.makeText(context, "Adding stuff to local database", Toast.LENGTH_LONG).show()
-
-                GlobalScope.launch {
-                    database.userDao().deleteAll()
-                    database.userInformationDao().deleteAll()
-
-                    database.userDao().insertUser(userResponse.user.toUserDb())
-                    database.userInformationDao()
-                        .insert(userResponse.information.toInformationDB())
-
-                    navController.navigate(R.id.action_registerFragment_to_mainLoginFragment)
-                    activity?.runOnUiThread {
-                        Toast.makeText(
-                            context,
-                            "Congratulations, you have signed in!",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                }
-            }
-        })
+        ).register()
     }
 }
 

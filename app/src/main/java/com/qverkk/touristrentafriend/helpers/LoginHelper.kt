@@ -60,13 +60,16 @@ object LoginHelper {
             ) {
                 val user = response.body()
                 if (user != null) {
-                    val userDao = AppDatabase.getDatabase(context!!).userDao()
+                    val database = AppDatabase.getDatabase(context!!)
+                    val userDao = database.userDao()
+                    val information = database.userInformationDao()
 
                     GlobalScope.launch {
-                        if (!userDatabase) {
-                            userDao.deleteAll()
-                            userDao.insertUser(user.user.toUserDb())
-                        }
+                        userDao.deleteAll()
+                        userDao.insertUser(user.user.toUserDb())
+
+                        information.deleteAll()
+                        information.insert(user.information.toInformationDB())
                         activity?.runOnUiThread {
                             val intent = Intent(context, BottomDashboardActivity::class.java)
                             activity.startActivity(intent)

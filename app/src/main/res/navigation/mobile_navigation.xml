@@ -6,6 +6,12 @@
     app:startDestination="@+id/navigation_home">
 
     <fragment
+        android:id="@+id/navigation_current_user"
+        android:name="com.qverkk.touristrentafriend.ui.dashboard.ui.currentUser.CurrentUserFragment"
+        android:label="@string/current_user"
+        tools:layout="@layout/fragment_current_user"/>
+
+    <fragment
         android:id="@+id/navigation_home"
         android:name="com.qverkk.touristrentafriend.ui.dashboard.ui.home.HomeFragment"
         android:label="@string/title_home"
