@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Tourist Rent A Friend</string>
+    <string name="all_login">Login</string>
+    <string name="all_register">Register</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="first_name_all">Firstname</string>
+    <string name="last_name_all">Lastname</string>
+    <string name="country_all">Country</string>
+    <string name="price_all">Price</string>
+    <string name="description_all">Description</string>
+    <string name="country_hint">Type in your country and select it from the dropdown</string>
+    <string name="birth_date_all">Birthdate</string>
+    <string name="city_name_all">City name</string>
+    <string name="repeat_password_all">Repeat password</string>
+    <string name="username_email">Username (email)</string>
+</resources>
