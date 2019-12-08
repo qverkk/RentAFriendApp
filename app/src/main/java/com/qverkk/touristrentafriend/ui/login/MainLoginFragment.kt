@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.qverkk.touristrentafriend.R
+import com.qverkk.touristrentafriend.helpers.LoginHelper
 import kotlinx.android.synthetic.main.fragment_main_login.*
 
 /**
@@ -31,6 +32,11 @@ class MainLoginFragment : Fragment(), View.OnClickListener {
         navController = Navigation.findNavController(view)
         btn_mainlogin_login.setOnClickListener(this)
         btn_mainlogin_register.setOnClickListener(this)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        LoginHelper.performLogin(activity, context)
     }
 
     override fun onClick(v: View?) {
