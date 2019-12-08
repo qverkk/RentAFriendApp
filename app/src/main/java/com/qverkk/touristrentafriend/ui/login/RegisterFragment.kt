@@ -9,8 +9,24 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.qverkk.touristrentafriend.R
+import com.qverkk.touristrentafriend.data.User
+import com.qverkk.touristrentafriend.data.UserDetails
+import com.qverkk.touristrentafriend.data.UserInformation
+import com.qverkk.touristrentafriend.database.AppDatabase
+import com.qverkk.touristrentafriend.services.UserService
 import kotlinx.android.synthetic.main.fragment_register.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
@@ -33,7 +49,9 @@ class RegisterFragment : Fragment() {
     private val DESCRIPTION_MINIMUM_LENGTH = 40
     private lateinit var LIST_OF_COUNTRIES: List<String>
 
-    private val myCalendar = Calendar.getInstance();
+    private val myCalendar = Calendar.getInstance()
+
+    private lateinit var navController: NavController
 
     private val date = DatePickerDialog.OnDateSetListener { _, year, month, day ->
         myCalendar.set(Calendar.YEAR, year)
@@ -52,6 +70,7 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        navController = Navigation.findNavController(view)
         initializeListeners()
     }
 
@@ -80,6 +99,7 @@ class RegisterFragment : Fragment() {
                 ageRequirement()
             ) {
                 println("Should register")
+                proceedRegistration()
             } else {
                 println("Errors in registration")
             }
@@ -96,7 +116,10 @@ class RegisterFragment : Fragment() {
 
     private fun passwordRequirement(): Boolean {
         val password = editText_register_password.text.toString()
-        if (!password.contains(NUMBER_REGEX.toRegex()) || !password.contains(UPPERCASE_REGEX.toRegex()) || !password.contains(SPECIAL_REGEX.toRegex())) {
+        if (!password.contains(NUMBER_REGEX.toRegex()) || !password.contains(UPPERCASE_REGEX.toRegex()) || !password.contains(
+                SPECIAL_REGEX.toRegex()
+            )
+        ) {
             editText_register_password.error =
                 "Password must contain at least 1 number, 1 UPPERCASE character, 1 special character"
             return false
@@ -233,4 +256,91 @@ class RegisterFragment : Fragment() {
             }
         }
     }
+
+    private fun proceedRegistration() {
+        val client = Retrofit.Builder()
+            .baseUrl("http://192.168.1.64:8080")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val service = client.create(UserService::class.java)
+        val user = User(
+            0,
+            editText_register_username.text.toString(),
+            editText_register_lastName.text.toString(),
+            editText_register_birthdate.text.toString(),
+            editText_register_username.text.toString(),
+            editText_register_password.text.toString()
+        )
+
+        val information = UserInformation(
+            0,
+            0,
+            editText_register_description.text.toString(),
+            editText_register_price.text.toString().toBigDecimal(),
+            spinner_register_country.text.toString(),
+            editText_register_cityName.text.toString()
+        )
+
+        val details = UserDetails(
+            user,
+            information
+        )
+        val call = service.register(
+            details
+        )
+
+        call.enqueue(object : Callback<UserDetails> {
+            override fun onFailure(call: Call<UserDetails>, t: Throwable) {
+                Toast.makeText(context, "Failed to communicate with server", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+            override fun onResponse(call: Call<UserDetails>, response: Response<UserDetails>) {
+                val userResponse = response.body()
+                if (userResponse == null) {
+                    Toast.makeText(
+                        context,
+                        getInformationFromErrorResponse(response),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    return
+                }
+
+                val database = AppDatabase.getDatabase(context!!.applicationContext)
+                Toast.makeText(context, "Adding stuff to local database", Toast.LENGTH_LONG).show()
+
+                GlobalScope.launch {
+                    database.userDao().deleteAll()
+                    database.userInformationDao().deleteAll()
+
+                    database.userDao().insertUser(userResponse.user.toUserDb())
+                    database.userInformationDao()
+                        .insert(userResponse.information.toInformationDB())
+
+                    navController.navigate(R.id.action_registerFragment_to_mainLoginFragment)
+                    activity?.runOnUiThread {
+                        Toast.makeText(
+                            context,
+                            "Congratulations, you have signed in!",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+            }
+        })
+    }
+}
+
+fun <T> getInformationFromErrorResponse(response: Response<T>): String {
+    if (response.errorBody() == null) {
+        return "No response"
+    }
+    val br = BufferedReader(InputStreamReader(response.errorBody()!!.byteStream()))
+    val sb = StringBuilder()
+    br.readLines().forEach {
+        sb.append(it)
+    }
+    br.close()
+    return sb.toString()
 }

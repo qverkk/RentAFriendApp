@@ -3,7 +3,6 @@ package com.qverkk.touristrentafriend.database.user
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.*
 
 @Entity(tableName = "current_users")
 data class UserDb(
@@ -15,7 +14,7 @@ data class UserDb(
     @ColumnInfo(name = "lastName")
     var lastName: String,
     @ColumnInfo(name = "birthDate")
-    var birthDate: Date,
+    var birthDate: String,
     @ColumnInfo(name = "username")
     var username: String,
     @ColumnInfo(name = "password")

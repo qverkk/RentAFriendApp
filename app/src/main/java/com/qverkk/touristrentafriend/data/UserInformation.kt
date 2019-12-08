@@ -2,6 +2,7 @@ package com.qverkk.touristrentafriend.data
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import com.qverkk.touristrentafriend.database.user.information.UserInformationDb
 import java.math.BigDecimal
 
 data class UserInformation(
@@ -23,4 +24,7 @@ data class UserInformation(
     @SerializedName("cityName")
     @Expose
     var cityName: String
-)
+) {
+    fun toInformationDB(): UserInformationDb =
+        UserInformationDb(informationId, userId, description, price, country, cityName)
+}

@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.qverkk.touristrentafriend.R
-import com.qverkk.touristrentafriend.data.User
 import com.qverkk.touristrentafriend.data.UserDetails
 import com.qverkk.touristrentafriend.database.AppDatabase
 import com.qverkk.touristrentafriend.services.UserService
@@ -73,7 +72,10 @@ class LoginFragment : Fragment(), View.OnClickListener {
 
                     }
 
-                    override fun onResponse(call: Call<UserDetails>, response: Response<UserDetails>) {
+                    override fun onResponse(
+                        call: Call<UserDetails>,
+                        response: Response<UserDetails>
+                    ) {
                         val user = response.body()
                         if (user != null) {
 

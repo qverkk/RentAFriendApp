@@ -3,7 +3,6 @@ package com.qverkk.touristrentafriend.data
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.qverkk.touristrentafriend.database.user.UserDb
-import java.util.*
 
 data class User(
     @SerializedName("userId")
@@ -17,7 +16,7 @@ data class User(
     var lastName: String,
     @SerializedName("birthDate")
     @Expose
-    var birthDate: Date,
+    var birthDate: String,
     @SerializedName("username")
     @Expose
     var username: String,
