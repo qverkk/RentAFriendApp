@@ -15,5 +15,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         MainActivity.context = applicationContext
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 }

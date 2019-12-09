@@ -14,6 +14,8 @@ class BottomDashboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bottom_dashboard)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val navController = findNavController(R.id.nav_host_fragment)
