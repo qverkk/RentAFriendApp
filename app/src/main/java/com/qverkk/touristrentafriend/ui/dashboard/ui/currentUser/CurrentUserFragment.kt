@@ -6,6 +6,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
 import android.view.LayoutInflater
@@ -15,17 +16,19 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.qverkk.touristrentafriend.R
 import com.qverkk.touristrentafriend.database.AppDatabase
+import com.qverkk.touristrentafriend.helpers.GZIPCompression
+import com.qverkk.touristrentafriend.helpers.PicturesHelper
 import com.qverkk.touristrentafriend.ui.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_current_user.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
+import java.util.zip.GZIPInputStream
 
 /**
  * A simple [Fragment] subclass.
@@ -92,13 +95,18 @@ class CurrentUserFragment : Fragment() {
         }
         when (requestCode) {
             GALLERY_REQUEST_CODE -> {
-                val selectedImage = data?.data ?: return
-                println("On activity result uri $selectedImage")
-                currentUserViewModel.changeImageUri(selectedImage)
-//                val uri = data?.data ?: return
-//                val inputStream = activity?.contentResolver?.openInputStream(uri)
-//                val selectedImage = BitmapFactory.decodeStream(inputStream)
-//                image_current_user_profile_picture.setImageBitmap(selectedImage)
+//                currentUserViewModel.changeImageUri(selectedImage)
+                val uri = data?.data ?: return
+                val inputStream = activity?.contentResolver?.openInputStream(uri)
+                val imageBitmap = BitmapFactory.decodeStream(inputStream)
+
+                val byteOutputStream = ByteArrayOutputStream()
+                imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteOutputStream)
+                val bytes = byteOutputStream.toByteArray()
+                val baseEncoded = Base64.encodeToString(bytes, Base64.DEFAULT)
+
+                PicturesHelper().postUserProfilePicture(GZIPCompression.compress(baseEncoded))
+                currentUserViewModel.changeImageUri(baseEncoded)
                 return
             }
         }
@@ -166,13 +174,15 @@ class CurrentUserFragment : Fragment() {
         })
 
         currentUserViewModel.imageSource.observe(this@CurrentUserFragment, Observer {
-            image_current_user_profile_picture.setImageURI(it)
-            val drawable = image_current_user_profile_picture.drawable
-            val bitmap = drawable.toBitmap()
+//            image_current_user_profile_picture.setImageURI(it)
+//            val drawable = image_current_user_profile_picture.drawable
+//            val bitmap = drawable.toBitmap()
 
-            val byteOutputStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteOutputStream)
-            val base64 = Base64.encode(byteOutputStream.toByteArray(), Base64.DEFAULT)
+//            val byteOutputStream = ByteArrayOutputStream()
+//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteOutputStream)
+            val base64 = Base64.decode(it, Base64.DEFAULT)
+            val bitmap = BitmapFactory.decodeByteArray(base64, 0, base64.size)
+            image_current_user_profile_picture.setImageBitmap(bitmap)
         })
     }
 

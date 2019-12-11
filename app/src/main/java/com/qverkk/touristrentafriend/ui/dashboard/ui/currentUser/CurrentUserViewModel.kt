@@ -1,9 +1,9 @@
 package com.qverkk.touristrentafriend.ui.dashboard.ui.currentUser
 
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.qverkk.touristrentafriend.helpers.PicturesHelper
 import com.qverkk.touristrentafriend.ui.login.helpers.InformationAsyncTask
 import com.qverkk.touristrentafriend.ui.login.helpers.UserAsyncTask
 import java.math.BigDecimal
@@ -28,14 +28,14 @@ class CurrentUserViewModel : ViewModel() {
     private val _description = MutableLiveData<String>()
     val description: LiveData<String> = _description
 
-    private val _imageSource = MutableLiveData<Uri>()
-    val imageSource: LiveData<Uri> = _imageSource
+    private val _imageSource = MutableLiveData<String>()
+    val imageSource: LiveData<String> = _imageSource
 
     init {
         fillAllUserInfo()
     }
 
-    fun changeImageUri(uri: Uri) {
+    fun changeImageUri(uri: String) {
         _imageSource.value = uri
     }
 
@@ -48,5 +48,6 @@ class CurrentUserViewModel : ViewModel() {
         _city.value = information.cityName
         _price.value = information.price
         _description.value = information.description
+        PicturesHelper().getUserProfilePicture(user.toUser(), this)
     }
 }
