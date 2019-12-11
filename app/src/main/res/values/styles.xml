@@ -6,8 +6,14 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:tint">@color/textColorPrimary</item>
         <item name="android:textColor">@color/textColorPrimary</item>
     </style>
 
+    <style name="BottomNavigationDarkTheme">
+        <item name="android:tint">@color/textColorPrimary</item>
+    </style>
+    <style name="BottomNavigationoWhiteTheme">
+        <item name="android:tint">@color/testColorSecondary</item>
+        <item name="android:textColor">@color/testColorSecondary</item>
+    </style>
 </resources>

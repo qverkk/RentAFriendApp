@@ -1,5 +1,6 @@
 package com.qverkk.touristrentafriend.ui.dashboard.ui.currentUser
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,8 +28,15 @@ class CurrentUserViewModel : ViewModel() {
     private val _description = MutableLiveData<String>()
     val description: LiveData<String> = _description
 
+    private val _imageSource = MutableLiveData<Uri>()
+    val imageSource: LiveData<Uri> = _imageSource
+
     init {
         fillAllUserInfo()
+    }
+
+    fun changeImageUri(uri: Uri) {
+        _imageSource.value = uri
     }
 
     private fun fillAllUserInfo() {

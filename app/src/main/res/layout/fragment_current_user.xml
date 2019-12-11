@@ -19,8 +19,8 @@
         <ImageView
             android:id="@+id/image_current_user_profile_picture"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            app:srcCompat="@android:drawable/ic_delete" />
+            android:layout_height="wrap_content"
+            android:minHeight="100dp"/>
 
         <TextView
             android:id="@+id/textView_current_user_full_name"
@@ -29,10 +29,10 @@
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:layout_marginTop="10dp"
             android:id="@+id/textView_current_user_birth_date"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
 
         <TextView
             android:layout_marginTop="10dp"

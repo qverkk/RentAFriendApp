@@ -1,10 +1,13 @@
 package com.qverkk.touristrentafriend.ui.login
 
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -18,6 +21,8 @@ import kotlinx.android.synthetic.main.fragment_main_login.*
 class MainLoginFragment : Fragment(), View.OnClickListener {
 
     private lateinit var navController: NavController
+    private val INTERNET_PERMISSION = 10003
+    private var savedView: View? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,14 +41,51 @@ class MainLoginFragment : Fragment(), View.OnClickListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        LoginHelper.performLogin(activity, context)
+        if (canLogin()) {
+            LoginHelper.performLogin(activity, context)
+        }
     }
 
     override fun onClick(v: View?) {
         when (v!!.id) {
-            btn_mainlogin_login.id -> navController.navigate(R.id.action_mainLoginFragment_to_loginFragment)
-            btn_mainlogin_register.id -> navController.navigate(R.id.action_mainLoginFragment_to_registerFragment)
+            btn_mainlogin_login.id -> {
+                savedView = v
+                if (canLogin()) {
+                    navController.navigate(R.id.action_mainLoginFragment_to_loginFragment)
+                }
+            }
+            btn_mainlogin_register.id -> {
+                savedView = v
+                if (canLogin()) {
+                    navController.navigate(R.id.action_mainLoginFragment_to_registerFragment)
+                }
+            }
         }
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            INTERNET_PERMISSION -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    if (savedView != null) {
+                        onClick(savedView)
+                    } else {
+                        LoginHelper.performLogin(activity, context)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun canLogin(): Boolean {
+        if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(arrayOf(Manifest.permission.INTERNET), INTERNET_PERMISSION)
+            return false
+        }
+        return true
+    }
 }
