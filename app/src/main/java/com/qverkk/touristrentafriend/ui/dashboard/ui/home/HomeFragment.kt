@@ -8,7 +8,11 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.qverkk.touristrentafriend.R
+import com.qverkk.touristrentafriend.data.UserDetails
+import com.qverkk.touristrentafriend.helpers.UsersHelper
 
 class HomeFragment : Fragment() {
 
@@ -23,9 +27,18 @@ class HomeFragment : Fragment() {
             ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
+        val recycleView: RecyclerView = root.findViewById(R.id.recycle_users_list)
+
+        val users = mutableListOf<UserDetails>()
+        val adapter = UsersAdapter(users)
+        UsersHelper().getAllUserInformation(users, adapter)
+        recycleView.adapter = adapter
+        recycleView.layoutManager = LinearLayoutManager(context)
+
         homeViewModel.text.observe(this, Observer {
             textView.text = it
         })
+
         return root
     }
 }

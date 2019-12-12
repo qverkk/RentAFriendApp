@@ -180,8 +180,7 @@ class CurrentUserFragment : Fragment() {
 
 //            val byteOutputStream = ByteArrayOutputStream()
 //            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteOutputStream)
-            val base64 = Base64.decode(it, Base64.NO_WRAP)
-            val bitmap = BitmapFactory.decodeByteArray(base64, 0, base64.size)
+            val bitmap = getBitmapFromBase64(it)
             image_current_user_profile_picture.setImageBitmap(bitmap)
         })
     }
@@ -203,4 +202,10 @@ class CurrentUserFragment : Fragment() {
             }
         }
     }
+}
+
+fun getBitmapFromBase64(it: String?): Bitmap? {
+    val base64 = Base64.decode(it, Base64.NO_WRAP)
+    val bitmap = BitmapFactory.decodeByteArray(base64, 0, base64.size)
+    return bitmap
 }

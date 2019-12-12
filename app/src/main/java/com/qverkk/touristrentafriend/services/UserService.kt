@@ -21,4 +21,7 @@ interface UserService {
 
     @GET("/all")
     fun all(): Call<List<User>>
+
+    @GET("/users/all/information")
+    fun getAllUsersWithInformation(): Call<List<UserDetails>>
 }
