@@ -103,9 +103,9 @@ class CurrentUserFragment : Fragment() {
                 val byteOutputStream = ByteArrayOutputStream()
                 imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteOutputStream)
                 val bytes = byteOutputStream.toByteArray()
-                val baseEncoded = Base64.encodeToString(bytes, Base64.DEFAULT)
+                val baseEncoded = Base64.encodeToString(bytes, Base64.NO_WRAP)
 
-                PicturesHelper().postUserProfilePicture(GZIPCompression.compress(baseEncoded))
+                PicturesHelper().postUserProfilePicture(baseEncoded)
                 currentUserViewModel.changeImageUri(baseEncoded)
                 return
             }
@@ -180,7 +180,7 @@ class CurrentUserFragment : Fragment() {
 
 //            val byteOutputStream = ByteArrayOutputStream()
 //            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteOutputStream)
-            val base64 = Base64.decode(it, Base64.DEFAULT)
+            val base64 = Base64.decode(it, Base64.NO_WRAP)
             val bitmap = BitmapFactory.decodeByteArray(base64, 0, base64.size)
             image_current_user_profile_picture.setImageBitmap(bitmap)
         })

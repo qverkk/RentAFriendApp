@@ -19,5 +19,5 @@ interface UserPictureService {
     fun getAllForUser(@Header("user") user: User): Call<List<Picture>>
 
     @POST("/pictures/user/add")
-    fun addPictureToProfile(@Header("user") userId: Int, @Body picture: ByteArray): Call<Boolean>
+    fun addPictureToProfile(@Header("user") userId: Int, @Body picture: String): Call<Boolean>
 }

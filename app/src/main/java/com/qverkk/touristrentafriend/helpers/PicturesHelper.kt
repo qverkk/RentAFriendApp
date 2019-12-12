@@ -10,6 +10,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.StringBuilder
 
 class PicturesHelper {
 
@@ -27,7 +28,7 @@ class PicturesHelper {
         return getImage(service, currentUserViewModel)
     }
 
-    fun postUserProfilePicture(picture: ByteArray) {
+    fun postUserProfilePicture(picture: String) {
         val client = Retrofit.Builder()
             .baseUrl("http://192.168.1.64:8080")
             .addConverterFactory(GsonConverterFactory.create())
@@ -38,7 +39,7 @@ class PicturesHelper {
         postPicture(service, picture)
     }
 
-    private fun postPicture(service: UserPictureService, picture: ByteArray) {
+    private fun postPicture(service: UserPictureService, picture: String) {
         val userDb = UserAsyncTask().execute().get()
         val call = service.addPictureToProfile(userDb.userId, picture)
         call.enqueue(object : Callback<Boolean> {
@@ -71,10 +72,10 @@ class PicturesHelper {
                 val userProfile = response.body() ?: return
                 result = userProfile
                 println(result?.imageBase64)
+                println(result?.toString()?.let { StringBuilder(it).toString() })
                 if (result != null) {
                     val uri = result!!.imageBase64
-                    println(uri)
-                    currentUserViewModel.changeImageUri(GZIPCompression.decompress(uri))
+                    currentUserViewModel.changeImageUri(uri)
                 }
             }
 
