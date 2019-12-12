@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.qverkk.touristrentafriend.R
@@ -30,7 +31,7 @@ class HomeFragment : Fragment() {
         val recycleView: RecyclerView = root.findViewById(R.id.recycle_users_list)
 
         val users = mutableListOf<UserDetails>()
-        val adapter = UsersAdapter(users)
+        val adapter = UsersAdapter(users, findNavController())
         UsersHelper().getAllUserInformation(users, adapter)
         recycleView.adapter = adapter
         recycleView.layoutManager = LinearLayoutManager(context)

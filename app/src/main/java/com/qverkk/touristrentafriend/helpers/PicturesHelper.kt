@@ -85,6 +85,7 @@ class PicturesHelper {
                     val uri = result!!.imageBase64
                     currentUserViewModel?.changeImageUri(uri)
                     userAdapterView?.userPictureImageView?.setImageBitmap(getBitmapFromBase64(uri))
+                    userAdapterView?.base64Image = uri
                 }
             }
 

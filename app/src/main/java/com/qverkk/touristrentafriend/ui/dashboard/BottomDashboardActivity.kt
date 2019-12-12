@@ -13,6 +13,7 @@ class BottomDashboardActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_bottom_dashboard)
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 
@@ -29,11 +30,8 @@ class BottomDashboardActivity : AppCompatActivity() {
                 R.id.navigation_notifications
             )
         )
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-    }
-
-    override fun onBackPressed() {
-
     }
 }

@@ -21,14 +21,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.qverkk.touristrentafriend.R
 import com.qverkk.touristrentafriend.database.AppDatabase
-import com.qverkk.touristrentafriend.helpers.GZIPCompression
 import com.qverkk.touristrentafriend.helpers.PicturesHelper
 import com.qverkk.touristrentafriend.ui.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_current_user.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
-import java.util.zip.GZIPInputStream
 
 /**
  * A simple [Fragment] subclass.
@@ -174,7 +172,7 @@ class CurrentUserFragment : Fragment() {
         })
 
         currentUserViewModel.imageSource.observe(this@CurrentUserFragment, Observer {
-//            image_current_user_profile_picture.setImageURI(it)
+            //            image_current_user_profile_picture.setImageURI(it)
 //            val drawable = image_current_user_profile_picture.drawable
 //            val bitmap = drawable.toBitmap()
 

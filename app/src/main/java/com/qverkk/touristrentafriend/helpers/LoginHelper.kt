@@ -73,6 +73,7 @@ object LoginHelper {
                         activity?.runOnUiThread {
                             val intent = Intent(context, BottomDashboardActivity::class.java)
                             activity.startActivity(intent)
+                            activity.finish()
                         }
                     }
                 }

@@ -13,7 +13,11 @@ import com.qverkk.touristrentafriend.database.user.information.UserInformationDb
 import com.qverkk.touristrentafriend.database.user.picture.UserPictureDb
 import com.qverkk.touristrentafriend.database.user.picture.UserProfilePictureDao
 
-@Database(entities = [UserDb::class, UserInformationDb::class, UserPictureDb::class], version = 7, exportSchema = false)
+@Database(
+    entities = [UserDb::class, UserInformationDb::class, UserPictureDb::class],
+    version = 7,
+    exportSchema = false
+)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 

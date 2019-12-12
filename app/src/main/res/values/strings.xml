@@ -25,4 +25,8 @@
     <string name="current_user">Profile</string>
     <string name="logout_all">Logout</string>
     <string name="title_search">Search</string>
+    <string name="full_name_all">Full name</string>
+    <string name="age_all">Age</string>
+    <string name="rent_all">Rent</string>
+    <string name="user_details_all">User details</string>
 </resources>

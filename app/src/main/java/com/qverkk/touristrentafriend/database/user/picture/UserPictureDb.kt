@@ -3,7 +3,6 @@ package com.qverkk.touristrentafriend.database.user.picture
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.math.BigDecimal
 
 @Entity(tableName = "user_picture")
 data class UserPictureDb(

@@ -82,7 +82,11 @@ class MainLoginFragment : Fragment(), View.OnClickListener {
     }
 
     private fun canLogin(): Boolean {
-        if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                context!!,
+                Manifest.permission.INTERNET
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             requestPermissions(arrayOf(Manifest.permission.INTERNET), INTERNET_PERMISSION)
             return false
         }
