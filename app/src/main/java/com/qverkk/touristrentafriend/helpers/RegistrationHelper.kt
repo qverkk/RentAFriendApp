@@ -5,6 +5,7 @@ import android.content.Context
 import android.widget.Toast
 import androidx.navigation.NavController
 import com.qverkk.touristrentafriend.R
+import com.qverkk.touristrentafriend.data.Constants
 import com.qverkk.touristrentafriend.data.User
 import com.qverkk.touristrentafriend.data.UserDetails
 import com.qverkk.touristrentafriend.data.UserInformation
@@ -37,7 +38,7 @@ class RegistrationHelper(
 
     fun register() {
         val client = Retrofit.Builder()
-            .baseUrl("http://192.168.1.64:8080")
+            .baseUrl(Constants.REST_API_SERVER_IP)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

@@ -1,5 +1,6 @@
 package com.qverkk.touristrentafriend.helpers
 
+import com.qverkk.touristrentafriend.data.Constants
 import com.qverkk.touristrentafriend.data.Picture
 import com.qverkk.touristrentafriend.data.User
 import com.qverkk.touristrentafriend.services.UserPictureService
@@ -21,7 +22,7 @@ class PicturesHelper {
         userAdapterView: UsersAdapter.ViewHolder? = null
     ): Picture? {
         val client = Retrofit.Builder()
-            .baseUrl("http://192.168.1.64:8080")
+            .baseUrl(Constants.REST_API_SERVER_IP)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -32,7 +33,7 @@ class PicturesHelper {
 
     fun postUserProfilePicture(picture: String) {
         val client = Retrofit.Builder()
-            .baseUrl("http://192.168.1.64:8080")
+            .baseUrl(Constants.REST_API_SERVER_IP)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

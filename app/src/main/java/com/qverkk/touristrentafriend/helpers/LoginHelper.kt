@@ -3,6 +3,7 @@ package com.qverkk.touristrentafriend.helpers
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import com.qverkk.touristrentafriend.data.Constants
 import com.qverkk.touristrentafriend.data.UserDetails
 import com.qverkk.touristrentafriend.database.AppDatabase
 import com.qverkk.touristrentafriend.services.UserService
@@ -40,7 +41,7 @@ object LoginHelper {
         userDatabase: Boolean = false
     ): Boolean {
         val client = Retrofit.Builder()
-            .baseUrl("http://192.168.1.64:8080")
+            .baseUrl(Constants.REST_API_SERVER_IP)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
