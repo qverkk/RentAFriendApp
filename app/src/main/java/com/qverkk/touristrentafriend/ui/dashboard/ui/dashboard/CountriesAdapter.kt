@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.qverkk.touristrentafriend.R
@@ -19,8 +20,15 @@ class CountriesAdapter(val mCountries: List<String>, private val navController: 
         val countryImage: TextView = itemView.findViewById(R.id.text_country_country_image)
         val countryText: TextView = itemView.findViewById(R.id.text_country_country_name)
 
+        init {
+            itemView.setOnClickListener(this)
+        }
+
         override fun onClick(p0: View?) {
-            println(itemView)
+            navController.navigate(
+                R.id.action_navigation_dashboard_to_countryUsersFragment,
+                bundleOf("countryName" to countryText.text)
+            )
         }
 
         fun changeImage(image: String) {

@@ -29,7 +29,11 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.qverkk.touristrentafriend.ui.dashboard.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_navigation_dashboard_to_countryUsersFragment"
+            app:destination="@id/countryUsersFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
@@ -48,5 +52,20 @@
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fullUserFragment_to_countryUsersFragment"
+            app:destination="@id/countryUsersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/countryUsersFragment"
+        android:name="com.qverkk.touristrentafriend.ui.dashboard.ui.dashboard.countryusers.CountryUsersFragment"
+        android:label="@string/users_country_all"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_countryUsersFragment_to_navigation_dashboard"
+            app:destination="@id/navigation_dashboard" />
+        <action
+            android:id="@+id/action_countryUsersFragment_to_fullUserFragment"
+            app:destination="@id/fullUserFragment" />
     </fragment>
 </navigation>

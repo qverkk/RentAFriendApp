@@ -15,11 +15,15 @@ import com.qverkk.touristrentafriend.data.UserDetails
 import com.qverkk.touristrentafriend.helpers.PicturesHelper
 import java.util.*
 
-class UsersAdapter(val mContacts: List<UserDetails>, private val navController: NavController) :
+class UsersAdapter(
+    val mContacts: List<UserDetails>,
+    private val navController: NavController,
+    private val comingFrom: Any
+) :
     RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
 
 
-    class ViewHolder(itemView: View, val navController: NavController) :
+    class ViewHolder(itemView: View, val navController: NavController, val comingFrom: Any) :
         RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
 
@@ -38,7 +42,10 @@ class UsersAdapter(val mContacts: List<UserDetails>, private val navController: 
         override fun onClick(view: View?) {
             println("Clicked on $user")
             navController.navigate(
-                R.id.action_navigation_home_to_fullUserFragment,
+                if (comingFrom is HomeFragment)
+                    R.id.action_navigation_home_to_fullUserFragment
+                else
+                    R.id.action_countryUsersFragment_to_fullUserFragment,
                 generateUserBundle()
             )
         }
@@ -51,7 +58,8 @@ class UsersAdapter(val mContacts: List<UserDetails>, private val navController: 
                 "city" to user?.information?.cityName,
                 "age" to getAge(),
                 "price" to user?.information?.price,
-                "description" to user?.information?.description
+                "description" to user?.information?.description,
+                "comingFrom" to comingFrom.javaClass.simpleName
             )
         }
 
@@ -69,7 +77,7 @@ class UsersAdapter(val mContacts: List<UserDetails>, private val navController: 
 
         val userView = inflater.inflate(R.layout.item_user, parent, false)
 
-        val viewHolder = ViewHolder(userView, navController)
+        val viewHolder = ViewHolder(userView, navController, comingFrom)
         return viewHolder
     }
 

@@ -24,4 +24,7 @@ interface UserService {
 
     @GET("/users/all/information")
     fun getAllUsersWithInformation(): Call<List<UserDetails>>
+
+    @GET("/users/all/information/country")
+    fun getAllUsersWithInformationFrom(@Header("countryName") countryName: String): Call<List<UserDetails>>
 }

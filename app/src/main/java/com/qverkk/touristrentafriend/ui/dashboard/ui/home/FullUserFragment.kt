@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.addCallback
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.qverkk.touristrentafriend.R
@@ -24,10 +25,6 @@ class FullUserFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            findNavController().navigate(R.id.action_fullUserFragment_to_navigation_home)
-        }
-
         val root = inflater.inflate(R.layout.fragment_full_user, container, false)
         val imageView: ImageView = root.findViewById(R.id.image_user_full_profile_picture)
         val fullName: TextView = root.findViewById(R.id.text_user_full_full_name)
@@ -38,6 +35,16 @@ class FullUserFragment : Fragment() {
         val description: TextView = root.findViewById(R.id.text_user_full_description)
 
         initializeComponents(imageView, fullName, country, city, age, price, description)
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            if (arguments!!["comingFrom"] == "HomeFragment") {
+                findNavController().navigate(R.id.action_fullUserFragment_to_navigation_home)
+            } else {
+                findNavController().navigate(
+                    R.id.action_fullUserFragment_to_countryUsersFragment,
+                    bundleOf("countryName" to country.text))
+            }
+        }
 
         return root
     }
