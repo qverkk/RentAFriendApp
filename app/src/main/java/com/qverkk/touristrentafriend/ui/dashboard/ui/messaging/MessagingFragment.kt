@@ -6,8 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import com.qverkk.touristrentafriend.R
+import com.qverkk.touristrentafriend.data.UserOrder
+import com.qverkk.touristrentafriend.helpers.RentUserHelper
+import com.qverkk.touristrentafriend.ui.login.helpers.UserAsyncTask
 
 /**
  * A simple [Fragment] subclass.
@@ -15,11 +21,23 @@ import com.qverkk.touristrentafriend.R
 class MessagingFragment : Fragment() {
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_messaging, container, false)
+        val root = inflater.inflate(R.layout.fragment_messaging, container, false)
+        val messagesRecycler: RecyclerView = root.findViewById(R.id.recycle_messaging_messages)
+
+        val messages = mutableListOf<UserOrder>()
+        val adapter = MessagesAdapter(messages, findNavController())
+
+        RentUserHelper().getAllOrdersForUser(messages, adapter)
+
+        messagesRecycler.adapter = adapter
+        messagesRecycler.layoutManager = LinearLayoutManager(context)
+
+        return root
     }
 
 

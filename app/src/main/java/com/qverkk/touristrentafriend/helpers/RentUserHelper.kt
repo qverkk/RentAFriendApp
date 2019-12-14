@@ -4,6 +4,8 @@ import android.widget.Button
 import com.qverkk.touristrentafriend.data.Constants
 import com.qverkk.touristrentafriend.data.UserOrder
 import com.qverkk.touristrentafriend.services.UserOrdersService
+import com.qverkk.touristrentafriend.ui.dashboard.ui.messaging.MessagesAdapter
+import com.qverkk.touristrentafriend.ui.login.helpers.UserAsyncTask
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -49,16 +51,20 @@ class RentUserHelper {
         postOrder(getOrderService(), rentingUserId, rentedUserId, rentButton)
     }
 
-    fun getAllOrdersForUser(userId: Int, orders: MutableList<UserOrder>) {
-        getOrders(getOrderService(), userId, orders)
+    fun getAllOrdersForUser(
+        orders: MutableList<UserOrder>,
+        adapter: MessagesAdapter
+    ) {
+        getOrders(getOrderService(), orders, adapter)
     }
 
     private fun getOrders(
         orderService: UserOrdersService,
-        userId: Int,
-        orders: MutableList<UserOrder>
+        orders: MutableList<UserOrder>,
+        adapter: MessagesAdapter
     ) {
-        val call = orderService.getOrdersFor(userId)
+        val userDb = UserAsyncTask().execute().get()
+        val call = orderService.getOrdersFor(userDb.userId)
         call.enqueue(object : Callback<List<UserOrder>> {
             override fun onFailure(call: Call<List<UserOrder>>, t: Throwable) {
                 println("Failure getting list of users")
@@ -72,7 +78,10 @@ class RentUserHelper {
                 if (body == null || body.isEmpty()) {
                     return
                 }
-                orders.addAll(body)
+                body.forEach {
+                    orders.add(it)
+                }
+                adapter.notifyItemRangeInserted(0, body.size)
             }
         })
     }

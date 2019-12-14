@@ -84,4 +84,10 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_message"
+        android:name="com.qverkk.touristrentafriend.ui.dashboard.ui.messaging.MessagingFragment"
+        android:label="Messaging center"
+        tools:layout="@layout/fragment_messaging" />
 </navigation>

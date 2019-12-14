@@ -27,6 +27,7 @@ class BottomDashboardActivity : AppCompatActivity() {
                 R.id.navigation_current_user,
                 R.id.navigation_home,
                 R.id.navigation_dashboard,
+                R.id.navigation_message,
                 R.id.navigation_notifications
             )
         )
