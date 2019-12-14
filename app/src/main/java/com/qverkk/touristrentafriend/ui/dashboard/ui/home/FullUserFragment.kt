@@ -51,7 +51,10 @@ class FullUserFragment : Fragment() {
         price: TextView,
         description: TextView
     ) {
-        imageView.setImageBitmap(getBitmapFromBase64(arguments!!["image"] as String))
+        val imageBase64 = arguments!!["image"] as String?
+        if (imageBase64.isNullOrEmpty().not()) {
+            imageView.setImageBitmap(getBitmapFromBase64(imageBase64))
+        }
         fullName.text = arguments!!["fullname"] as String
         country.text = arguments!!["country"] as String
         city.text = arguments!!["city"] as String
