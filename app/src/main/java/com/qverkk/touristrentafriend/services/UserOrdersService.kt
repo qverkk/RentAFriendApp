@@ -13,4 +13,7 @@ interface UserOrdersService {
 
     @GET("/orders/get/for")
     fun getOrdersFor(@Header("userId") userId: Int): Call<List<UserOrder>>
+
+    @GET("/orders/user/rented")
+    fun isUserRented(@Header("rentingId") rentingId: Int, @Header("rentedId") rentedId: Int): Call<Boolean>
 }

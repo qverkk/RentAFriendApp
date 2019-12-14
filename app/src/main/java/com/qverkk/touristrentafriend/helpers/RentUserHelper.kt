@@ -12,6 +12,35 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RentUserHelper {
 
+    fun isUserRented(
+        rentingUserId: Int,
+        rentedUserId: Int,
+        rentButton: Button
+    ) {
+        isRented(getOrderService(), rentingUserId, rentedUserId, rentButton)
+    }
+
+    private fun isRented(
+        orderService: UserOrdersService,
+        rentingUserId: Int,
+        rentedUserId: Int,
+        rentButton: Button
+    ) {
+        val call = orderService.isUserRented(rentingUserId, rentedUserId)
+        call.enqueue(object : Callback<Boolean> {
+            override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                println("Failed to check if user is rented")
+            }
+
+            override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                if (response.body() == true) {
+                    rentButton.text = "Rented"
+                    rentButton.isEnabled = false
+                }
+            }
+        })
+    }
+
     fun postUserOrderBetween(
         rentingUserId: Int,
         rentedUserId: Int,

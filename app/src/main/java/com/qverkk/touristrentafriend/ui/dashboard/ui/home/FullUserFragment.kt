@@ -52,10 +52,13 @@ class FullUserFragment : Fragment() {
             }
         }
 
+
+        val user = UserAsyncTask().execute().get()
         rentButton.setOnClickListener {
-            val user = UserAsyncTask().execute().get()
             RentUserHelper().postUserOrderBetween(user.userId, rentedUserId, rentButton)
         }
+
+        RentUserHelper().isUserRented(user.userId, rentedUserId, rentButton)
 
         return root
     }
