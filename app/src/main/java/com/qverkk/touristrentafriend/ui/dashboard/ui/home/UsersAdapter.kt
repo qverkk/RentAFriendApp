@@ -59,7 +59,8 @@ class UsersAdapter(
                 "age" to getAge(),
                 "price" to user?.information?.price,
                 "description" to user?.information?.description,
-                "comingFrom" to comingFrom.javaClass.simpleName
+                "comingFrom" to comingFrom.javaClass.simpleName,
+                "rentedUserId" to user?.user?.userId
             )
         }
 

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.addCallback
@@ -12,13 +13,17 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.qverkk.touristrentafriend.R
+import com.qverkk.touristrentafriend.helpers.RentUserHelper
 import com.qverkk.touristrentafriend.ui.dashboard.ui.currentUser.getBitmapFromBase64
+import com.qverkk.touristrentafriend.ui.login.helpers.UserAsyncTask
 import java.math.BigDecimal
 
 /**
  * A simple [Fragment] subclass.
  */
 class FullUserFragment : Fragment() {
+
+    var rentedUserId = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,6 +38,7 @@ class FullUserFragment : Fragment() {
         val age: TextView = root.findViewById(R.id.text_user_full_age)
         val price: TextView = root.findViewById(R.id.text_user_full_price)
         val description: TextView = root.findViewById(R.id.text_user_full_description)
+        val rentButton: Button = root.findViewById(R.id.button_user_full_rent)
 
         initializeComponents(imageView, fullName, country, city, age, price, description)
 
@@ -44,6 +50,11 @@ class FullUserFragment : Fragment() {
                     R.id.action_fullUserFragment_to_countryUsersFragment,
                     bundleOf("countryName" to country.text))
             }
+        }
+
+        rentButton.setOnClickListener {
+            val user = UserAsyncTask().execute().get()
+            RentUserHelper().postUserOrderBetween(user.userId, rentedUserId, rentButton)
         }
 
         return root
@@ -68,5 +79,6 @@ class FullUserFragment : Fragment() {
         age.text = (arguments!!["age"] as Int).toString()
         price.text = (arguments!!["price"] as BigDecimal).toPlainString()
         description.text = arguments!!["description"] as String
+        rentedUserId = arguments!!["rentedUserId"] as Int
     }
 }
