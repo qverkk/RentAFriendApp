@@ -1,9 +1,11 @@
 package com.qverkk.touristrentafriend.ui.dashboard.ui.dashboard
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.activity.addCallback
 import androidx.core.view.children
@@ -43,7 +45,10 @@ class DashboardFragment : Fragment() {
             android.R.layout.simple_spinner_item, countries
         )
 
-        searchAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+
+        searchAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         searchText.setAdapter(searchAdapter)
 
         searchText.onItemClickListener = object : AdapterView.OnItemClickListener {
@@ -53,6 +58,7 @@ class DashboardFragment : Fragment() {
                 for (i in 0..countries.size) {
                     if (itemAtPosition == countries[i]) {
                         countriesListView.scrollToPosition(i)
+                        inputMethodManager.hideSoftInputFromWindow(activity?.currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
                         return
                     }
                 }

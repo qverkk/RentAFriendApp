@@ -32,7 +32,11 @@
         tools:layout="@layout/fragment_dashboard" >
         <action
             android:id="@+id/action_navigation_dashboard_to_countryUsersFragment"
-            app:destination="@id/countryUsersFragment" />
+            app:destination="@id/countryUsersFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -54,7 +58,11 @@
             app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_fullUserFragment_to_countryUsersFragment"
-            app:destination="@id/countryUsersFragment" />
+            app:destination="@id/countryUsersFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/countryUsersFragment"
@@ -63,9 +71,17 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_countryUsersFragment_to_navigation_dashboard"
-            app:destination="@id/navigation_dashboard" />
+            app:destination="@id/navigation_dashboard"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_countryUsersFragment_to_fullUserFragment"
-            app:destination="@id/fullUserFragment" />
+            app:destination="@id/fullUserFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 </navigation>
