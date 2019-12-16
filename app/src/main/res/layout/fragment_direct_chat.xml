@@ -10,32 +10,34 @@
         android:id="@+id/recycle_direct_messages"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/linear1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/linear1"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linear1"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_marginBottom="50sp"
         android:weightSum="7"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintRight_toRightOf="parent">
 
-        <TextView
+        <EditText
             android:id="@+id/text_direct_message_text"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="5" />
+            android:layout_weight="5"
+            android:inputType="text" />
 
         <Button
             android:id="@+id/button_direct_send"
             android:layout_width="0dp"
-            android:text="@string/send_all"
             android:layout_height="match_parent"
-            android:layout_weight="2" />
+            android:layout_weight="2"
+            android:text="@string/send_all" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

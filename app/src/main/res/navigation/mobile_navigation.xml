@@ -9,13 +9,13 @@
         android:id="@+id/navigation_current_user"
         android:name="com.qverkk.touristrentafriend.ui.dashboard.ui.currentUser.CurrentUserFragment"
         android:label="@string/current_user"
-        tools:layout="@layout/fragment_current_user"/>
+        tools:layout="@layout/fragment_current_user" />
 
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.qverkk.touristrentafriend.ui.dashboard.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_navigation_home_to_fullUserFragment"
             app:destination="@id/fullUserFragment"
@@ -29,7 +29,7 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.qverkk.touristrentafriend.ui.dashboard.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" >
+        tools:layout="@layout/fragment_dashboard">
         <action
             android:id="@+id/action_navigation_dashboard_to_countryUsersFragment"
             app:destination="@id/countryUsersFragment"
@@ -62,7 +62,7 @@
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/countryUsersFragment"
@@ -89,5 +89,26 @@
         android:id="@+id/navigation_message"
         android:name="com.qverkk.touristrentafriend.ui.dashboard.ui.messaging.MessagingFragment"
         android:label="Messaging center"
-        tools:layout="@layout/fragment_messaging" />
+        tools:layout="@layout/fragment_messaging">
+        <action
+            android:id="@+id/action_navigation_message_to_directChatFragment"
+            app:destination="@id/directChatFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/directChatFragment"
+        android:name="com.qverkk.touristrentafriend.ui.dashboard.ui.messaging.chat.DirectChatFragment"
+        android:label="@string/chat_with"
+        tools:layout="@layout/fragment_direct_chat">
+        <action
+            android:id="@+id/action_directChatFragment_to_navigation_message"
+            app:destination="@id/navigation_message"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 </navigation>

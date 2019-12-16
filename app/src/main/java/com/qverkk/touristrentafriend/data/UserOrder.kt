@@ -15,5 +15,11 @@ data class UserOrder(
     var userRentedId: Int,
     @SerializedName("chatName")
     @Expose
-    var chatName: String
+    var chatName: String,
+    @SerializedName("userRentingName")
+    @Expose
+    val userRentingName: String,
+    @SerializedName("userRentedName")
+    @Expose
+    val userRentedName: String
 )
