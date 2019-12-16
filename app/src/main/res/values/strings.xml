@@ -30,4 +30,5 @@
     <string name="user_details_all">User details</string>
     <string name="users_country_all">Users from {countryName}</string>
     <string name="title_messages">Messages</string>
+    <string name="send_all">Send</string>
 </resources>
