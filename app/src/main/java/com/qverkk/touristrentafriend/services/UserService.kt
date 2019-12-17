@@ -1,5 +1,6 @@
 package com.qverkk.touristrentafriend.services
 
+import com.qverkk.touristrentafriend.data.MessageDTO
 import com.qverkk.touristrentafriend.data.User
 import com.qverkk.touristrentafriend.data.UserDetails
 import retrofit2.Call
@@ -27,4 +28,7 @@ interface UserService {
 
     @GET("/users/all/information/country")
     fun getAllUsersWithInformationFrom(@Header("countryName") countryName: String): Call<List<UserDetails>>
+
+    @POST("/users/send")
+    fun sendMessage(@Body message: MessageDTO): Call<Boolean>
 }

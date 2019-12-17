@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1013482506260",
+    "firebase_url": "https://tourist-rent-a-friend.firebaseio.com",
+    "project_id": "tourist-rent-a-friend",
+    "storage_bucket": "tourist-rent-a-friend.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1013482506260:android:ba2c12141707586f7e7f01",
+        "android_client_info": {
+          "package_name": "com.qverkk.touristrentafriend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1013482506260-q6dk6u536cqsnv9lmse8vpspbjsce2fn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qverkk.touristrentafriend",
+            "certificate_hash": "9207533043fa2938dc9808a2e5a4663c3e143ddd"
+          }
+        },
+        {
+          "client_id": "1013482506260-r5idpns7m97t6gcfphdetoffj41h2a9u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCf6oWGPIQUat0QOsWZ7J0qQIdjh0UOlrc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1013482506260-r5idpns7m97t6gcfphdetoffj41h2a9u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,7 @@
 package com.qverkk.touristrentafriend.helpers
 
 import com.qverkk.touristrentafriend.data.Constants
+import com.qverkk.touristrentafriend.data.MessageDTO
 import com.qverkk.touristrentafriend.data.UserDetails
 import com.qverkk.touristrentafriend.services.UserService
 import com.qverkk.touristrentafriend.ui.dashboard.ui.home.UsersAdapter
@@ -11,6 +12,29 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class UsersHelper {
+
+    fun sendMessage(
+        messageDTO: MessageDTO
+    ) {
+        val client = Retrofit.Builder()
+            .baseUrl(Constants.REST_API_SERVER_IP)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val service = client.create(UserService::class.java)
+        val call = service.sendMessage(messageDTO)
+
+        call.enqueue(object : Callback<Boolean> {
+            override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                println("Failure sending message")
+            }
+
+            override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                println("Success sending message")
+            }
+
+        })
+    }
 
     fun getAllUserInformation(
         list: MutableList<UserDetails>,
