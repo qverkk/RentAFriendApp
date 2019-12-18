@@ -63,7 +63,7 @@ class CountriesAdapter(val mCountries: List<String>, private val navController: 
             return Locale.getAvailableLocales()
                 .toList()
                 .stream()
-                .filter { it.displayCountry == countryName }
+                .filter { it.getDisplayCountry(Locale.ENGLISH) == countryName }
                 .findFirst()
                 .orElse(null)
         }

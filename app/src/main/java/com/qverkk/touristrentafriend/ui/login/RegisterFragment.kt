@@ -139,8 +139,13 @@ class RegisterFragment : Fragment() {
     private fun initializeCountries() {
         val locales = Locale.getAvailableLocales()
         LIST_OF_COUNTRIES =
-            locales.toList().stream().map { it.displayCountry }.filter { it.isNotEmpty() }.sorted()
-                .distinct().collect(Collectors.toList())
+            locales.toList()
+                .stream()
+                .map { it.getDisplayCountry(Locale.ENGLISH) }
+                .filter { it.isNotEmpty() }
+                .sorted()
+                .distinct()
+                .collect(Collectors.toList())
 
         val adapter = ArrayAdapter<String>(
             context!!.applicationContext,

@@ -37,8 +37,15 @@ class DashboardFragment : Fragment() {
 
         val countriesListView: RecyclerView = root.findViewById(R.id.list_dashboard_countries)
 
-        val countries = Locale.getAvailableLocales().toList().stream().map { it.displayCountry }.filter { it.isNotEmpty() }.sorted()
-            .distinct().collect(Collectors.toList())
+        val countries = Locale
+            .getAvailableLocales()
+            .toList()
+            .stream()
+            .map { it.getDisplayCountry(Locale.ENGLISH) }
+            .filter { it.isNotEmpty() }
+            .sorted()
+            .distinct()
+            .collect(Collectors.toList())
 
         val searchAdapter = ArrayAdapter<String>(
             context!!,
