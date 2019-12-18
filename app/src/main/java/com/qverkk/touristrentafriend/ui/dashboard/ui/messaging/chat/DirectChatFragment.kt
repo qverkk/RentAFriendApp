@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -51,13 +52,19 @@ class DirectChatFragment : Fragment() {
 
     private val onNotice = object : BroadcastReceiver() {
         override fun onReceive(contxt: Context?, intent: Intent) {
-            messages.add(
-                UserMessage(
-                    intent.getStringExtra("from")!!,
-                    intent.getStringExtra("body")!!
+            val fromUser = intent.getStringExtra("from")
+            val bodyText = intent.getStringExtra("body")
+            if (fromUser != null && bodyText != null) {
+                messages.add(
+                    UserMessage(
+                        intent.getStringExtra("from")!!,
+                        intent.getStringExtra("body")!!
+                    )
                 )
-            )
-            adapter.notifyDataSetChanged()
+                adapter.notifyDataSetChanged()
+            } else {
+                Toast.makeText(context, "No user or body defined", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
