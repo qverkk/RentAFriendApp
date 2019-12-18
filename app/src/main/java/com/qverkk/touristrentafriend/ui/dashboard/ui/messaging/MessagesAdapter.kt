@@ -21,6 +21,7 @@ class MessagesAdapter(val mOrders: List<UserOrder>, private val navController: N
         val chatNameText: TextView = itemView.findViewById(R.id.text_item_message_name)
         var chatId = ""
         var chatWith = ""
+        var toUser = 0
 
         init {
             itemView.setOnClickListener(this)
@@ -31,7 +32,8 @@ class MessagesAdapter(val mOrders: List<UserOrder>, private val navController: N
                 R.id.action_navigation_message_to_directChatFragment,
                 bundleOf(
                     "chatId" to chatId,
-                    "chatWith" to chatWith
+                    "chatWith" to chatWith,
+                    "toUser" to toUser
                 )
             )
         }
@@ -60,6 +62,11 @@ class MessagesAdapter(val mOrders: List<UserOrder>, private val navController: N
             order.userRentedName
         } else {
             order.userRentingName
+        }
+        holder.toUser = if (user.userId == order.userRentingId) {
+            order.userRentedId
+        } else {
+            order.userRentingId
         }
     }
 }

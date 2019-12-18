@@ -31,4 +31,7 @@ interface UserService {
 
     @POST("/users/send")
     fun sendMessage(@Body message: MessageDTO): Call<Boolean>
+
+    @GET("/messages/all")
+    fun getAllMessages(@Header("chatId") chatId: String): Call<List<MessageDTO>>
 }
