@@ -105,6 +105,7 @@ class DirectChatFragment : Fragment() {
                     messageTextView.text.toString()
                 )
             )
+            messageTextView.text.clear()
         }
     }
 }
