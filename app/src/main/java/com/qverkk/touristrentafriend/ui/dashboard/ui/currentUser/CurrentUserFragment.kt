@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -95,16 +97,36 @@ class CurrentUserFragment : Fragment() {
             GALLERY_REQUEST_CODE -> {
 //                currentUserViewModel.changeImageUri(selectedImage)
                 val uri = data?.data ?: return
-                val inputStream = activity?.contentResolver?.openInputStream(uri)
-                val imageBitmap = BitmapFactory.decodeStream(inputStream)
 
-                val byteOutputStream = ByteArrayOutputStream()
-                imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteOutputStream)
-                val bytes = byteOutputStream.toByteArray()
-                val baseEncoded = Base64.encodeToString(bytes, Base64.NO_WRAP)
+                var imageSize = 0L
+                val cursor = requireContext().contentResolver.query(uri, null, null, null, null)
+                if (cursor != null) {
+                    val size = cursor.getColumnIndex(OpenableColumns.SIZE)
+                    cursor.moveToFirst()
+                    imageSize = cursor.getLong(size)
+                    cursor.close()
+                    imageSize = (imageSize / 1024)
+                    println(imageSize)
+                }
 
-                PicturesHelper().postUserProfilePicture(baseEncoded)
-                currentUserViewModel.changeImageUri(baseEncoded)
+                if (imageSize < 5000) {
+                    val inputStream = activity?.contentResolver?.openInputStream(uri)
+                    val imageBitmap = BitmapFactory.decodeStream(inputStream)
+
+                    val byteOutputStream = ByteArrayOutputStream()
+                    imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteOutputStream)
+                    val bytes = byteOutputStream.toByteArray()
+                    val baseEncoded = Base64.encodeToString(bytes, Base64.NO_WRAP)
+
+                    PicturesHelper().postUserProfilePicture(baseEncoded)
+                    currentUserViewModel.changeImageUri(baseEncoded)
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "This image is too big, image must be below 5mb",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
                 return
             }
         }
