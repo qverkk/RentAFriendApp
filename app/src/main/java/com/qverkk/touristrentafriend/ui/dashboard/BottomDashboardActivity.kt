@@ -11,7 +11,16 @@ import com.qverkk.touristrentafriend.R
 
 class BottomDashboardActivity : AppCompatActivity() {
 
+    private val PREF_NAME = "theme"
+    private var PRIVATE_MODE = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        val pref = getSharedPreferences(PREF_NAME, PRIVATE_MODE)
+        setTheme(
+            if (pref.getBoolean(PREF_NAME, true)) {
+                R.style.AppThemeDark
+            } else R.style.AppThemeLight
+        )
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_bottom_dashboard)
@@ -28,7 +37,7 @@ class BottomDashboardActivity : AppCompatActivity() {
                 R.id.navigation_home,
                 R.id.navigation_dashboard,
                 R.id.navigation_message,
-                R.id.navigation_notifications
+                R.id.navigation_settings
             )
         )
 

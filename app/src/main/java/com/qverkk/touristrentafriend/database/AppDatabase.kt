@@ -15,7 +15,7 @@ import com.qverkk.touristrentafriend.database.user.picture.UserProfilePictureDao
 
 @Database(
     entities = [UserDb::class, UserInformationDb::class, UserPictureDb::class],
-    version = 7,
+    version = 9,
     exportSchema = false
 )
 @TypeConverters(Converters::class)

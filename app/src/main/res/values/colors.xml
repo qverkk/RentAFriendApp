@@ -4,6 +4,9 @@
     <color name="colorPrimaryBackup">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="colorAccentDark">#020102</color>
     <color name="textColorPrimary">#FFFFFF</color>
-    <color name="testColorSecondary">#000000</color>
+    <color name="textColorSecondary">#000000</color>
+    <color name="titleColor">#6B8B6B</color>
+    <color name="navigationTintColor">#28AFD3</color>
 </resources>
